@@ -63,13 +63,13 @@ export async function getTransactionSummary(req, res){
             WHERE user_id = ${userId} AND amount > 0
         `;
         const expenseResult = await sql`
-            SELECT COALESCE(SUM(amount), 0) AS expense FROM transactions 
+            SELECT COALESCE(SUM(amount), 0) AS expenses FROM transactions 
             WHERE user_id = ${userId} AND amount < 0
         `;
         res.status(200).json({
             balance: balanceResult[0].balance,
             income: incomeResult[0].income,
-            expense: expenseResult[0].expense
+            expenses: expenseResult[0].expenses
         });
     }catch (error) {
         console.error("Error fetching summary:", error);
